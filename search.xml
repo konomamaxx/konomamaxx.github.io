@@ -4,9 +4,22 @@
   
     
     <entry>
+      <title>图片标识</title>
+      <link href="/2022/08/18/%E6%BC%94%E7%A4%BA/%E5%9B%BE%E7%89%87%E6%A0%87%E6%B3%A8%E6%BC%94%E7%A4%BA/"/>
+      <url>/2022/08/18/%E6%BC%94%E7%A4%BA/%E5%9B%BE%E7%89%87%E6%A0%87%E6%B3%A8%E6%BC%94%E7%A4%BA/</url>
+      
+        <content type="html"><![CDATA[<p><img src="https://tva1.sinaimg.cn/large/006RKGBpgy1h0egvklcc4j30lo0v6n3d.jpg" alt="我是图片标识">;</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>代码演示</title>
-      <link href="/2022/08/18/%E4%BB%A3%E7%A0%81%E5%9D%97%E6%BC%94%E7%A4%BA/%E6%BC%94%E7%A4%BA/"/>
-      <url>/2022/08/18/%E4%BB%A3%E7%A0%81%E5%9D%97%E6%BC%94%E7%A4%BA/%E6%BC%94%E7%A4%BA/</url>
+      <link href="/2022/08/18/%E6%BC%94%E7%A4%BA/%E4%BB%A3%E7%A0%81%E5%9D%97%E6%BC%94%E7%A4%BA/"/>
+      <url>/2022/08/18/%E6%BC%94%E7%A4%BA/%E4%BB%A3%E7%A0%81%E5%9D%97%E6%BC%94%E7%A4%BA/</url>
       
         <content type="html"><![CDATA[<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">a</span> ()&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       
