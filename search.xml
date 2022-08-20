@@ -4,11 +4,69 @@
   
     
     <entry>
+      <title>STM32HAL库函数</title>
+      <link href="/2022/08/20/STM32HAL%E5%BA%93%E5%87%BD%E6%95%B0/"/>
+      <url>/2022/08/20/STM32HAL%E5%BA%93%E5%87%BD%E6%95%B0/</url>
+      
+        <content type="html"><![CDATA[<h1 id="延迟函数"><a href="#延迟函数" class="headerlink" title="延迟函数"></a>延迟函数</h1><pre><code>    毫秒级延迟</code></pre><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HAL_Delay(uint32_t Delay)</span><br></pre></td></tr></table></figure><pre><code>uint32_t Delay:  This parameter can be (0..2^32)retval:          None</code></pre><h1 id="GPIO口控制"><a href="#GPIO口控制" class="headerlink" title="GPIO口控制"></a>GPIO口控制</h1><pre><code>多个IO口设置同样的状态,可以使用 &#39;|&#39; 连接</code></pre><h2 id="GPIO-Write"><a href="#GPIO-Write" class="headerlink" title="GPIO_Write"></a>GPIO_Write</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HAL_GPIO_WritePin(GPIOx, GPIO_Pin, PinState) </span><br></pre></td></tr></table></figure><pre><code>GPIOx:         where x can be (A..G depending on device used)GPIO_Pin :     This parameter can be one of GPIO_PIN_x where x can be (0..15)PinState :     This parameter can be one of the GPIO_PinState enum values:                1    GPIO_PIN_RESET: to clear the port pin  (0)                2    GPIO_PIN_SET: to set the port pin      (1)retval:     None</code></pre><h2 id="GPIO-Read"><a href="#GPIO-Read" class="headerlink" title="GPIO_Read"></a>GPIO_Read</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HAL_GPIO_ReadPin(GPIOx, GPIO_Pin) </span><br></pre></td></tr></table></figure><pre><code>GPIOx:         where x can be (A..G depending on device used)GPIO_Pin :     This parameter can be one of GPIO_PIN_x where x can be (0..15)retval:        1    GPIO_PIN_RESET        (0)               2    GPIO_PIN_SET      (1)</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> STM32 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> STM32 </tag>
+            
+            <tag> HAL库函数 </tag>
+            
+            <tag> GPIO </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>STM32_RCC</title>
+      <link href="/2022/08/20/stm32-RCC/"/>
+      <url>/2022/08/20/stm32-RCC/</url>
+      
+        <content type="html"><![CDATA[<h1 id="时钟树"><a href="#时钟树" class="headerlink" title="时钟树"></a>时钟树</h1><h2 id="时钟树总体框架"><a href="#时钟树总体框架" class="headerlink" title="时钟树总体框架"></a>时钟树总体框架</h2><img src = "https://s1.328888.xyz/2022/08/20/B7MDI.png" width="85%"><h2 id="时钟来源"><a href="#时钟来源" class="headerlink" title="时钟来源"></a>时钟来源</h2><img src = "https://s1.328888.xyz/2022/08/20/B7gvK.png" width="75%"><h1 id="MCO"><a href="#MCO" class="headerlink" title="MCO"></a>MCO</h1><h2 id="MCO作用"><a href="#MCO作用" class="headerlink" title="MCO作用"></a>MCO作用</h2><pre><code>    MCO：对外输出时钟     可以用作多个设备高度同步完成任务</code></pre><h2 id="MCO配置"><a href="#MCO配置" class="headerlink" title="MCO配置"></a>MCO配置</h2><img src = "https://s1.328888.xyz/2022/08/20/B7P5j.png" width="75%">  ]]></content>
+      
+      
+      <categories>
+          
+          <category> STM32 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> STM32 </tag>
+            
+            <tag> RCC </tag>
+            
+            <tag> MCO </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>STM32CubeIde界面汉化</title>
       <link href="/2022/08/20/%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E6%B1%89%E5%8C%96/"/>
       <url>/2022/08/20/%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E6%B1%89%E5%8C%96/</url>
       
-        <content type="html"><![CDATA[<img src="https://s1.328888.xyz/2022/08/20/BGQUR.png" width="50%"/><img src="https://s1.328888.xyz/2022/08/20/BGzLU.png" width="50%"><img src="https://s1.328888.xyz/2022/08/20/BG7CB.png" width="50%">]]></content>
+        <content type="html"><![CDATA[<img src="https://s1.328888.xyz/2022/08/20/BGQUR.png" width="50%"><img src="https://s1.328888.xyz/2022/08/20/BGzLU.png" width="50%"><img src="https://s1.328888.xyz/2022/08/20/BG7CB.png" width="50%"><img src="https://s1.328888.xyz/2022/08/20/B7II6.png" width="50%">]]></content>
       
       
       <categories>
