@@ -4,6 +4,60 @@
   
     
     <entry>
+      <title>STM32_DMA</title>
+      <link href="/2022/08/22/STM32-DMA/"/>
+      <url>/2022/08/22/STM32-DMA/</url>
+      
+        <content type="html"><![CDATA[<h1 id="DMA"><a href="#DMA" class="headerlink" title="DMA"></a>DMA</h1><p>所有包括DMA工作的项目需要把DMA初始化函数放到前面！</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> STM32 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> STM32 </tag>
+            
+            <tag> DMA </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>STM32_ADC</title>
+      <link href="/2022/08/21/STM32_ADC/"/>
+      <url>/2022/08/21/STM32_ADC/</url>
+      
+        <content type="html"><![CDATA[<h1 id="ADC"><a href="#ADC" class="headerlink" title="ADC"></a>ADC</h1><h2 id="ADC校准"><a href="#ADC校准" class="headerlink" title="ADC校准"></a>ADC校准</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HAL_ADCEx_Calibration_Start(ADC_HandleTypeDef* hadc); //先校准ADC</span><br><span class="line">  * @param  hadc: This parameter can be </span><br><span class="line">            1  &amp;hadc1</span><br><span class="line">            2  &amp;hadc2</span><br><span class="line">  * @retval HAL status</span><br></pre></td></tr></table></figure><pre><code>  例子:  HAL_ADCEx_Calibration_Start(&amp;hadc1);  </code></pre><h2 id="软件开启一次转换"><a href="#软件开启一次转换" class="headerlink" title="软件开启一次转换"></a>软件开启一次转换</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">uint16_t ADC_IN_1(void) //ADC采集程序</span><br><span class="line">&#123;</span><br><span class="line">   HAL_ADC_Start(&amp;hadc1); //开始ADC采集</span><br><span class="line">   HAL_ADC_PollForConversion(&amp;hadc1,500); //等待采集结束</span><br><span class="line">   if(HAL_IS_BIT_SET(HAL_ADC_GetState(&amp;hadc1), HAL_ADC_STATE_REG_EOC)) //读取ADC完成标志位</span><br><span class="line">   &#123;</span><br><span class="line">     return HAL_ADC_GetValue(&amp;hadc1); //读出ADC数值</span><br><span class="line">   &#125;</span><br><span class="line">     return 0;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure><h2 id="DMA连续转换"><a href="#DMA连续转换" class="headerlink" title="DMA连续转换"></a>DMA连续转换</h2><pre><code>1 开启ADC 连续转换模式(不然转换一次就关闭了)2 循坏模式 半字数据</code></pre><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HAL_ADC_Start_DMA(ADC_HandleTypeDef* hadc, uint32_t* pData, uint32_t Length)</span><br><span class="line"></span><br><span class="line">  * @param  hadc: ADC handle</span><br><span class="line">  * @param  pData: The destination Buffer address.</span><br><span class="line">  * @param  Length: The length of data to be transferred from ADC peripheral to memory.</span><br><span class="line">  * @retval None</span><br><span class="line"></span><br><span class="line">  DMA must be configured to transfer size: half word.</span><br></pre></td></tr></table></figure><pre><code>例子: HAL_ADC_Start_DMA(&amp;hadc1, (uint32_t *) &amp; a1, 1);  adc1   转入a1中  每次连续转换1个</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> STM32 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> STM32 </tag>
+            
+            <tag> ADC </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>STM32-USART</title>
       <link href="/2022/08/21/STM32-USART/"/>
       <url>/2022/08/21/STM32-USART/</url>
