@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>STM32HAL_SPI</title>
+      <link href="/2022/08/22/STM32HAL-SPI/"/>
+      <url>/2022/08/22/STM32HAL-SPI/</url>
+      
+        <content type="html"><![CDATA[<h1 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HAL_SPI_TransmitReceive(SPI_HandleTypeDef *hspi, uint8_t *pTxData, uint8_t *pRxData, uint16_t Size,uint32_t Timeout)</span><br><span class="line"></span><br><span class="line">  * @param  hspi pointer to a SPI_HandleTypeDef structure that contains</span><br><span class="line">  *               the configuration information for SPI module.</span><br><span class="line">  * @param  pTxData pointer to transmission data buffer</span><br><span class="line">  * @param  pRxData pointer to reception data buffer</span><br><span class="line">  * @param  Size amount of data to be sent and received</span><br><span class="line">  * @param  Timeout Timeout duration</span><br><span class="line">  * @retval HAL status</span><br><span class="line"></span><br></pre></td></tr></table></figure><pre><code>例子:HAL_SPI_TransmitReceive(&amp;hspi2,&amp;TxData,&amp;Rxdata,1,1000)SPI2   发送地址 接收地址  数量(单位byte)  溢出时间</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> STM32_HAL </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> STM32 </tag>
+            
+            <tag> HAL </tag>
+            
+            <tag> SPI </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>STM32HAL_DMA</title>
       <link href="/2022/08/22/STM32HAL-DMA/"/>
       <url>/2022/08/22/STM32HAL-DMA/</url>
@@ -51,9 +80,9 @@
             
             <tag> STM32 </tag>
             
-            <tag> ADC </tag>
-            
             <tag> HAL </tag>
+            
+            <tag> ADC </tag>
             
         </tags>
       
@@ -74,13 +103,13 @@
             
             <tag> STM32 </tag>
             
+            <tag> HAL </tag>
+            
             <tag> USART </tag>
             
             <tag> 重写printf函数 </tag>
             
             <tag> __week </tag>
-            
-            <tag> HAL </tag>
             
         </tags>
       
@@ -107,11 +136,11 @@
             
             <tag> STM32 </tag>
             
+            <tag> HAL </tag>
+            
             <tag> HAL库函数 </tag>
             
             <tag> GPIO </tag>
-            
-            <tag> HAL </tag>
             
         </tags>
       
@@ -138,11 +167,11 @@
             
             <tag> STM32 </tag>
             
+            <tag> HAL </tag>
+            
             <tag> RCC </tag>
             
             <tag> MCO </tag>
-            
-            <tag> HAL </tag>
             
         </tags>
       
@@ -169,11 +198,11 @@
             
             <tag> STM32 </tag>
             
+            <tag> HAL </tag>
+            
             <tag> STM32CubeIde </tag>
             
             <tag> 图形化编程 </tag>
-            
-            <tag> HAL </tag>
             
         </tags>
       
