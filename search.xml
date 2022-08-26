@@ -8,7 +8,7 @@
       <link href="/2022/08/26/STM32HAL-EXTI/"/>
       <url>/2022/08/26/STM32HAL-EXTI/</url>
       
-        <content type="html"><![CDATA[<h1 id="STM32外部中断通道"><a href="#STM32外部中断通道" class="headerlink" title="STM32外部中断通道"></a>STM32外部中断通道</h1><img src="https://s2.loli.net/2022/08/26/ySLWVwuMUBf5FgK.png" ><h1 id="中断回调函数"><a href="#中断回调函数" class="headerlink" title="中断回调函数"></a>中断回调函数</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)</span><br><span class="line"></span><br><span class="line">  * @param  GPIO_Pin: Specifies the pins connected EXTI line</span><br><span class="line">  * @retval None</span><br></pre></td></tr></table></figure><h1 id="STM32中断配置"><a href="#STM32中断配置" class="headerlink" title="STM32中断配置"></a>STM32中断配置</h1><img src="https://s2.loli.net/2022/08/26/6nGB4YMxp9hoWi2.png" ><p>例子:<br>     void HAL_GPIO_EXTI_Callback(uint16_t GPIO_PIN)<br>   {<br>       if(GPIO_PIN&#x3D;&#x3D;KEY1_PIN)<br>       {<br>           if(KEY_1())<br>           {<br>               LED_1_Contrary();<br>           }<br>       }<br>   }</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="STM32外部中断通道"><a href="#STM32外部中断通道" class="headerlink" title="STM32外部中断通道"></a>STM32外部中断通道</h1><img src="https://s2.loli.net/2022/08/26/ySLWVwuMUBf5FgK.png" ><h1 id="STM32中断配置"><a href="#STM32中断配置" class="headerlink" title="STM32中断配置"></a>STM32中断配置</h1><img src="https://s2.loli.net/2022/08/26/6nGB4YMxp9hoWi2.png" ><h1 id="中断回调函数"><a href="#中断回调函数" class="headerlink" title="中断回调函数"></a>中断回调函数</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)</span><br><span class="line"></span><br><span class="line">  * @param  GPIO_Pin: Specifies the pins connected EXTI line</span><br><span class="line">  * @retval None</span><br></pre></td></tr></table></figure><pre><code>例子:void HAL_GPIO_EXTI_Callback(uint16_t GPIO_PIN)&#123;    if(GPIO_PIN==KEY1_PIN)    &#123;     if(KEY_1())       &#123;          LED_1_Contrary();         &#125;    &#125;&#125;</code></pre>]]></content>
       
       
       <categories>
@@ -111,9 +111,9 @@
             
             <tag> STM32 </tag>
             
-            <tag> DMA </tag>
-            
             <tag> HAL </tag>
+            
+            <tag> DMA </tag>
             
         </tags>
       
