@@ -4,6 +4,89 @@
   
     
     <entry>
+      <title>ESP8266</title>
+      <link href="/2022/08/27/ESP8266/"/>
+      <url>/2022/08/27/ESP8266/</url>
+      
+        <content type="html"><![CDATA[<h1 id="全部引脚定义"><a href="#全部引脚定义" class="headerlink" title="全部引脚定义"></a>全部引脚定义</h1><img src="https://s2.loli.net/2022/08/27/bholLQcX5vIdDZt.png" ><h1 id="不可随意使用引脚"><a href="#不可随意使用引脚" class="headerlink" title="不可随意使用引脚"></a>不可随意使用引脚</h1><img src="https://s2.loli.net/2022/08/27/R28GIOAeUKr6Zpq.png" >]]></content>
+      
+      
+      <categories>
+          
+          <category> ESP8266 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ESP8266 </tag>
+            
+            <tag> ESP8266引脚 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>STM32HAL_RTC</title>
+      <link href="/2022/08/27/STM32HAL-RTC/"/>
+      <url>/2022/08/27/STM32HAL-RTC/</url>
+      
+        <content type="html"><![CDATA[<h1 id="RTC"><a href="#RTC" class="headerlink" title="RTC"></a>RTC</h1><pre><code>可由 Vbat 供电 不会被复位键复位日历 无法断电保存rtc.h 自己添加MX_RTC_Init();需要自己添加RTC.c 中的MX_RTC_Init(void)函数有:</code></pre><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if(HAL_RTCEx_BKUPRead(&amp;hrtc, RTC_BKP_DR1)!=0x5050)    //判断是否时第一次上电 (默认是0xffff) 如果不是0x5050 则是第一次 就给初始化数据 否则就继承之前的</span><br><span class="line">&#123;</span><br><span class="line"> HAL_RTCEx_BKUPWrite(&amp;hrtc, RTC_BKP_DR1, 0x5050);</span><br><span class="line">    </span><br><span class="line"> 最后在后面加个&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><pre><code>存放数据 先定义一个RTC_DateTypeDef rtcTime ;然后调用HAL_RTC_GetTime(&amp;hrtc, &amp;rtcTime, RTC_FORMAT_BIN);读取数据printf(&quot;%02d:%02d:%02d\r\n&quot;,GetTime.Hours, GetTime.Minutes, GetTime.Seconds);</code></pre><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HAL_PWR_EnableBkUpAccess();         //取消备份区写保护</span><br><span class="line"></span><br><span class="line">__HAL_RCC_BKP_CLK_ENABLE();         //使能电源始终pwr</span><br><span class="line"></span><br><span class="line">__HAL_RCC_RTC_ENABLE();</span><br></pre></td></tr></table></figure><pre><code>需要先读出 时间 再读出日期</code></pre><h2 id="BKP"><a href="#BKP" class="headerlink" title="BKP"></a>BKP</h2><pre><code>10个16位寄存器可保存20个字节用户应用数据后备寄存器 可由 Vbat 供电 不会被复位键复位</code></pre><h3 id="HAL-RTCEx-BKUPRead"><a href="#HAL-RTCEx-BKUPRead" class="headerlink" title="HAL_RTCEx_BKUPRead()"></a>HAL_RTCEx_BKUPRead()</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  HAL_RTCEx_BKUPWrite</span><br><span class="line">* @param  hrtc: pointer to a RTC_HandleTypeDef structure that contains</span><br><span class="line">*                the configuration information for RTC.</span><br><span class="line">* @param  BackupRegister: RTC Backup data Register number.</span><br><span class="line">*          This parameter can be: RTC_BKP_DRx where x can be from 1 to 10 (or 42) to</span><br><span class="line">*                                 specify the register (depending devices).</span><br><span class="line">* @retval Read value</span><br></pre></td></tr></table></figure><h3 id="HAL-RTCEx-BKUPWrite"><a href="#HAL-RTCEx-BKUPWrite" class="headerlink" title="HAL_RTCEx_BKUPWrite"></a>HAL_RTCEx_BKUPWrite</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">  HAL_RTCEx_BKUPWrite</span><br><span class="line">* @param  hrtc: pointer to a RTC_HandleTypeDef structure that contains</span><br><span class="line">*                the configuration information for RTC.</span><br><span class="line">* @param  BackupRegister: RTC Backup data Register number.</span><br><span class="line">*          This parameter can be: RTC_BKP_DRx where x can be from 1 to 10 (or 42) to</span><br><span class="line">*                                 specify the register (depending devices).</span><br><span class="line">* @param  Data: Data to be written in the specified RTC Backup data register.</span><br><span class="line">* @retval None</span><br></pre></td></tr></table></figure><pre><code>例子:    HAL_RTCEx_BKUPRead(&amp;hrtc, RTC_BKP_DR1)!=0x5050)     HAL_RTCEx_BKUPWrite(&amp;hrtc, RTC_BKP_DR1, 0x5050);</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> STM32_HAL </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> STM32 </tag>
+            
+            <tag> HAL </tag>
+            
+            <tag> RTC </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Internet</title>
+      <link href="/2022/08/27/Internet/"/>
+      <url>/2022/08/27/Internet/</url>
+      
+        <content type="html"><![CDATA[<h1 id="杂"><a href="#杂" class="headerlink" title="杂"></a>杂</h1><pre><code>局域网查看自己局域网 cmd-&gt;ipconfigipv4  ipv6 地址网关 WiFi 本身自己 就像海关 连接国与国之间 网关 连接网络与网络之间联网后会被赋相对互联网的ip 地址-&gt;DNS服务器-&gt;ip-&gt;服务器</code></pre><h1 id="互联网知识"><a href="#互联网知识" class="headerlink" title="互联网知识"></a>互联网知识</h1><h2 id="链路层"><a href="#链路层" class="headerlink" title="链路层"></a>链路层</h2><pre><code>WiFi 无线终端模式  接入点模式  混合模式</code></pre><h2 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h2><pre><code>TCP/UDP   TCP 稳健   UDP 快 网游/在线视频</code></pre><h2 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h2><pre><code>HTTP/FTP/...HTTP 有请求/响应</code></pre><h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><h4 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h4><img src="https://s2.loli.net/2022/08/27/8aFslempTXbjrx5.png" ><h5 id="请求行"><a href="#请求行" class="headerlink" title="请求行"></a>请求行</h5><pre><code>GET / HTTP / 1.1读取 / HTTP协议版本1.1GET 读取 POST 发送 </code></pre><h5 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h5><pre><code>Host:www.taichi-maker.com 网站地址User-Agent：Mozilla....  用户信息Accept:text/html 支持的格式Accept-Lauguage: zh-CN,zh;q=0.8 支持的语言ACcept-Encoding：gzip，deflate，sdch 支持的压缩编码格式Connection：Keep-Alive 是否继续保持连接</code></pre><h4 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h4><img src="https://s2.loli.net/2022/08/27/B4kWIAlQywh7Uiz.png" ><h5 id="状态行"><a href="#状态行" class="headerlink" title="状态行"></a>状态行</h5><pre><code>HTTP/1.1 200 OK 200 成功代码HTTP/1.1 404 NOT FOUND404 未找到代码状态码:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">100~199：成功接收请求，要求客户端继续提交下一次请求才能完成整个处理过程。</span><br><span class="line"></span><br><span class="line">200~299：成功接收请求并已完成整个处理过程。常用200</span><br><span class="line"></span><br><span class="line">300~399：完成请求，客户需进一步细化请求。</span><br><span class="line"></span><br><span class="line">400~499：客户端的请求有错误，常用404和403(403的含义是权限不够，服务器拒绝访问。)</span><br><span class="line"></span><br><span class="line">500~599：服务器端出现错误，常用500</span><br></pre></td></tr></table></figure></code></pre><h5 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h5><pre><code>Content-Type: text/html; charset = UTF-8响应体内容 : HTML网页; 编码字符集格式UTF-8Content-Type: image/jpeg  相应格式为jpeg图像</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 互联网 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 互联网 </tag>
+            
+            <tag> HTML </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>STM32HAL_EXTI</title>
       <link href="/2022/08/26/STM32HAL-EXTI/"/>
       <url>/2022/08/26/STM32HAL-EXTI/</url>
@@ -111,9 +194,9 @@
             
             <tag> STM32 </tag>
             
-            <tag> HAL </tag>
-            
             <tag> DMA </tag>
+            
+            <tag> HAL </tag>
             
         </tags>
       
