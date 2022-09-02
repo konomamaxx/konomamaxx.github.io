@@ -163,9 +163,9 @@
             
             <tag> HAL </tag>
             
-            <tag> SPI </tag>
-            
             <tag> OLED </tag>
+            
+            <tag> SPI </tag>
             
         </tags>
       
