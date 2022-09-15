@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>51_Timer2</title>
+      <link href="/2022/09/15/51-Timer2/"/>
+      <url>/2022/09/15/51-Timer2/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Timer2-简述"><a href="#Timer2-简述" class="headerlink" title="Timer2 简述"></a>Timer2 简述</h1><pre><code>定时器2是一个16位定时器/计数器。其涉及的特殊寄存器如图&lt;img src= &quot;https://s1.328888.xyz/2022/09/15/cUYd6.png&quot;&gt;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> STC89C52RC </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> STC89C52RC </tag>
+            
+            <tag> Timer2 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>FreeRTOS</title>
       <link href="/2022/09/05/FreeRTOS/"/>
       <url>/2022/09/05/FreeRTOS/</url>
