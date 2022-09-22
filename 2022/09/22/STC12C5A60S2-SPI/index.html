@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>STC12C5A60S2_SPI | 人生在勤,不索何获</title><meta name="keywords" content="STC12C5A60S2,SPI"><meta name="author" content="konomamaxx"><meta name="copyright" content="konomamaxx"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="STC12C5A60S2_SPI综述测试中发现硬件SPI在传输的时候容易出bug，有时候MOSI不会被拉低，导致数据错误，不知道如何解决。 这里只展示最简单发送数据。  SPI所涉及寄存器  SPCTL  SPSTAT  例程SPI.c12345678910111213141516171819202122232425262728293031323334353637#include &quot;SP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STC12C5A60S2_SPI">
+<meta property="og:url" content="https://konomamaxx.github.io/2022/09/22/STC12C5A60S2-SPI/index.html">
+<meta property="og:site_name" content="人生在勤,不索何获">
+<meta property="og:description" content="STC12C5A60S2_SPI综述测试中发现硬件SPI在传输的时候容易出bug，有时候MOSI不会被拉低，导致数据错误，不知道如何解决。 这里只展示最简单发送数据。  SPI所涉及寄存器  SPCTL  SPSTAT  例程SPI.c12345678910111213141516171819202122232425262728293031323334353637#include &quot;SP">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/006RKGBpgy1h0egvklcc4j30lo0v6n3d.jpg">
+<meta property="article:published_time" content="2022-09-22T12:22:29.000Z">
+<meta property="article:modified_time" content="2022-09-22T12:34:16.338Z">
+<meta property="article:author" content="konomamaxx">
+<meta property="article:tag" content="STC12C5A60S2">
+<meta property="article:tag" content="SPI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/006RKGBpgy1h0egvklcc4j30lo0v6n3d.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://konomamaxx.github.io/2022/09/22/STC12C5A60S2-SPI/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'STC12C5A60S2_SPI',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-22 20:34:16'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/08/22/H3YPUOkL5WZepJX.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 总览</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tva1.sinaimg.cn/large/006RKGBpgy1h0egvklcc4j30lo0v6n3d.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">人生在勤,不索何获</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 总览</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">STC12C5A60S2_SPI</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-22T12:22:29.000Z" title="发表于 2022-09-22 20:22:29">2022-09-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-22T12:34:16.338Z" title="更新于 2022-09-22 20:34:16">2022-09-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/STC12C5A60S2/">STC12C5A60S2</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="STC12C5A60S2_SPI"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="STC12C5A60S2-SPI"><a href="#STC12C5A60S2-SPI" class="headerlink" title="STC12C5A60S2_SPI"></a>STC12C5A60S2_SPI</h1><h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><pre><code>测试中发现硬件SPI在传输的时候容易出bug，有时候MOSI不会被拉低，导致数据错误，不知道如何解决。
+这里只展示最简单发送数据。
+</code></pre>
+<h2 id="SPI所涉及寄存器"><a href="#SPI所涉及寄存器" class="headerlink" title="SPI所涉及寄存器"></a>SPI所涉及寄存器</h2><img src = "https://s1.328888.xyz/2022/09/22/I2XRr.png">
+
+<h3 id="SPCTL"><a href="#SPCTL" class="headerlink" title="SPCTL"></a>SPCTL</h3><img src = "https://s1.328888.xyz/2022/09/22/I2qUj.png">
+
+<h3 id="SPSTAT"><a href="#SPSTAT" class="headerlink" title="SPSTAT"></a>SPSTAT</h3><img src = "https://s1.328888.xyz/2022/09/22/I2pGI.png">
+
+<h2 id="例程"><a href="#例程" class="headerlink" title="例程"></a>例程</h2><h3 id="SPI-c"><a href="#SPI-c" class="headerlink" title="SPI.c"></a>SPI.c</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;SPI.h&quot;</span><br><span class="line"></span><br><span class="line">sbit LED = P3^0;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void delay3us(void)  </span><br><span class="line">&#123;</span><br><span class="line">    unsigned char a;</span><br><span class="line">    for(a=5;a&gt;0;a--);</span><br><span class="line">    _nop_();  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void SPI_Init()</span><br><span class="line">&#123;</span><br><span class="line">	SPDAT = 0x00; 		//clear dat</span><br><span class="line">	</span><br><span class="line">	SPSTAT = SPIF|WCOL;		</span><br><span class="line">	</span><br><span class="line">	SPCTL = SPEN|MSTR|SPDHH|CPHA|CPOL;	//master  CPOL = 1  CPHA = 1</span><br><span class="line">	</span><br><span class="line">	IE2|=ESPI;</span><br><span class="line">	</span><br><span class="line">	EA = 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void SPI_WR_Byte(unsigned char dat)	// 1 dat   0 cmd</span><br><span class="line">&#123;</span><br><span class="line">	SPDAT=dat;</span><br><span class="line">	delay3us();		//need some delay  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void SPI_Interrupt() interrupt 9 </span><br><span class="line">&#123;</span><br><span class="line">	SPSTAT = SPIF|WCOL;</span><br><span class="line">	SPISS = 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SPI-h"><a href="#SPI-h" class="headerlink" title="SPI.h"></a>SPI.h</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">#ifndef __SPI_OLED12864_H</span><br><span class="line">#define __SPI_OLED12864_h</span><br><span class="line"></span><br><span class="line">#include &lt;reg52.h&gt;</span><br><span class="line">#include &lt;intrins.h&gt;</span><br><span class="line"></span><br><span class="line">sfr SPCTL = 0xce;</span><br><span class="line">sfr SPSTAT = 0xcd;</span><br><span class="line">sfr SPDAT = 0xcf;</span><br><span class="line">sfr AUXR = 0xa2;</span><br><span class="line"></span><br><span class="line">sfr IE2 = 0xaf;</span><br><span class="line"></span><br><span class="line">sbit SPISS = P1^3;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#define SPIF  0x80</span><br><span class="line">#define WCOL  0x40</span><br><span class="line"></span><br><span class="line">#define SSIG  0x80</span><br><span class="line">#define SPEN  0x40</span><br><span class="line">#define DORD  0x20</span><br><span class="line">#define MSTR  0x10</span><br><span class="line">#define CPOL  0x08</span><br><span class="line">#define CPHA  0x04</span><br><span class="line"></span><br><span class="line">#define SPDHH  0x00</span><br><span class="line">#define SPDH  0x01</span><br><span class="line">#define SPDL  0x02</span><br><span class="line">#define SPDLL  0x03</span><br><span class="line"></span><br><span class="line">#define ESPI 0x02</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**********</span><br><span class="line"></span><br><span class="line">MOSI = P1^5</span><br><span class="line">MISO = P1^6</span><br><span class="line">SPICLK = P1^7</span><br><span class="line"></span><br><span class="line">**********/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void SPI_Init();</span><br><span class="line">void SPI_WR_Byte(unsigned char dat);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="main-c"><a href="#main-c" class="headerlink" title="main.c"></a>main.c</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;main.h&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">	SPI_Init();</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		SPI_WR_Byte(0x66);</span><br><span class="line">		SPI_WR_Byte(0x76);</span><br><span class="line">		SPI_WR_Byte(0x86);</span><br><span class="line">		SPI_WR_Byte(0x96);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="main-h"><a href="#main-h" class="headerlink" title="main.h"></a>main.h</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#ifndef __MAIN_H</span><br><span class="line">#define __MAIN_H</span><br><span class="line"></span><br><span class="line">#include &lt;reg52.h&gt;</span><br><span class="line">#include &quot;SPI.h&quot;</span><br><span class="line">#include &lt;intrins.h&gt;</span><br><span class="line"></span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/STC12C5A60S2/">STC12C5A60S2</a><a class="post-meta__tags" href="/tags/SPI/">SPI</a></div><div class="post_share"><div class="social-share" data-image="https://tva1.sinaimg.cn/large/006RKGBpgy1h0egvklcc4j30lo0v6n3d.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/09/21/STC12C5A60S2-PCA/"><img class="next-cover" src="https://tva1.sinaimg.cn/large/006RKGBpgy1h0egvklcc4j30lo0v6n3d.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">STC12C5A60S2_PCA</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/09/21/STC12C5A60S2-ADC/" title="STC12C5A60S2_ADC"><img class="cover" src="https://tva1.sinaimg.cn/large/006RKGBpgy1g8b8dovcytj30lo0exadr.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-21</div><div class="title">STC12C5A60S2_ADC</div></div></a></div><div><a href="/2022/09/21/STC12C5A60S2-PCA/" title="STC12C5A60S2_PCA"><img class="cover" src="https://tva1.sinaimg.cn/large/006RKGBpgy1h0egvklcc4j30lo0v6n3d.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-21</div><div class="title">STC12C5A60S2_PCA</div></div></a></div><div><a href="/2022/09/20/STC12C5A60S2-Timer0/" title="STC12C5A60S2_Timer0"><img class="cover" src="https://tva1.sinaimg.cn/large/006RKGBpgy1h0egvklcc4j30lo0v6n3d.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-20</div><div class="title">STC12C5A60S2_Timer0</div></div></a></div><div><a href="/2022/09/21/STC12C5A60S2-UART/" title="STC12C5A60S2_UART"><img class="cover" src="https://tva1.sinaimg.cn/large/006RKGBpgy1h2yvgpuqsuj30lo0v3qal.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-21</div><div class="title">STC12C5A60S2_UART</div></div></a></div><div><a href="/2022/08/23/STM32HAL-OLED%E7%A7%BB%E6%A4%8D/" title="STM32HAL_OLED移植"><img class="cover" src="https://tva1.sinaimg.cn/large/006RKGBpgy1g8b8dovcytj30lo0exadr.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-23</div><div class="title">STM32HAL_OLED移植</div></div></a></div><div><a href="/2022/08/22/STM32HAL-SPI/" title="STM32HAL_SPI"><img class="cover" src="https://tva1.sinaimg.cn/large/006RKGBpgy1gi1g23o0ghj30lo0ffdky.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-22</div><div class="title">STM32HAL_SPI</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/08/22/H3YPUOkL5WZepJX.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">konomamaxx</div><div class="author-info__description">陌生人你好!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/konomamaxx"><i class="fab fa-github"></i><span>我的github</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/konomamaxx" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://www.bilibili.com" target="_blank" title="BiliBili"><i class="fa-solid fa-atom"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#STC12C5A60S2-SPI"><span class="toc-number">1.</span> <span class="toc-text">STC12C5A60S2_SPI</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%BC%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">综述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SPI%E6%89%80%E6%B6%89%E5%8F%8A%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">SPI所涉及寄存器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SPCTL"><span class="toc-number">1.2.1.</span> <span class="toc-text">SPCTL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPSTAT"><span class="toc-number">1.2.2.</span> <span class="toc-text">SPSTAT</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%8B%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">例程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SPI-c"><span class="toc-number">1.3.1.</span> <span class="toc-text">SPI.c</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPI-h"><span class="toc-number">1.3.2.</span> <span class="toc-text">SPI.h</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#main-c"><span class="toc-number">1.3.3.</span> <span class="toc-text">main.c</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#main-h"><span class="toc-number">1.3.4.</span> <span class="toc-text">main.h</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/09/22/STC12C5A60S2-SPI/" title="STC12C5A60S2_SPI"><img src="https://tva1.sinaimg.cn/large/006RKGBpgy1h0egvklcc4j30lo0v6n3d.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="STC12C5A60S2_SPI"/></a><div class="content"><a class="title" href="/2022/09/22/STC12C5A60S2-SPI/" title="STC12C5A60S2_SPI">STC12C5A60S2_SPI</a><time datetime="2022-09-22T12:22:29.000Z" title="发表于 2022-09-22 20:22:29">2022-09-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/21/STC12C5A60S2-PCA/" title="STC12C5A60S2_PCA"><img src="https://tva1.sinaimg.cn/large/006RKGBpgy1h0egvklcc4j30lo0v6n3d.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="STC12C5A60S2_PCA"/></a><div class="content"><a class="title" href="/2022/09/21/STC12C5A60S2-PCA/" title="STC12C5A60S2_PCA">STC12C5A60S2_PCA</a><time datetime="2022-09-21T14:26:05.000Z" title="发表于 2022-09-21 22:26:05">2022-09-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/21/STC12C5A60S2-ADC/" title="STC12C5A60S2_ADC"><img src="https://tva1.sinaimg.cn/large/006RKGBpgy1g8b8dovcytj30lo0exadr.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="STC12C5A60S2_ADC"/></a><div class="content"><a class="title" href="/2022/09/21/STC12C5A60S2-ADC/" title="STC12C5A60S2_ADC">STC12C5A60S2_ADC</a><time datetime="2022-09-21T12:24:07.000Z" title="发表于 2022-09-21 20:24:07">2022-09-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/21/STC12C5A60S2-UART/" title="STC12C5A60S2_UART"><img src="https://tva1.sinaimg.cn/large/006RKGBpgy1h2yvgpuqsuj30lo0v3qal.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="STC12C5A60S2_UART"/></a><div class="content"><a class="title" href="/2022/09/21/STC12C5A60S2-UART/" title="STC12C5A60S2_UART">STC12C5A60S2_UART</a><time datetime="2022-09-21T01:58:17.000Z" title="发表于 2022-09-21 09:58:17">2022-09-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/20/STC12C5A60S2-Timer0/" title="STC12C5A60S2_Timer0"><img src="https://tva1.sinaimg.cn/large/006RKGBpgy1h0egvklcc4j30lo0v6n3d.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="STC12C5A60S2_Timer0"/></a><div class="content"><a class="title" href="/2022/09/20/STC12C5A60S2-Timer0/" title="STC12C5A60S2_Timer0">STC12C5A60S2_Timer0</a><time datetime="2022-09-19T16:12:31.000Z" title="发表于 2022-09-20 00:12:31">2022-09-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By konomamaxx</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">露浓花瘦，薄汗轻衣透🧐</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

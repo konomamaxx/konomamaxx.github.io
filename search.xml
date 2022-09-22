@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>STC12C5A60S2_SPI</title>
+      <link href="/2022/09/22/STC12C5A60S2-SPI/"/>
+      <url>/2022/09/22/STC12C5A60S2-SPI/</url>
+      
+        <content type="html"><![CDATA[<h1 id="STC12C5A60S2-SPI"><a href="#STC12C5A60S2-SPI" class="headerlink" title="STC12C5A60S2_SPI"></a>STC12C5A60S2_SPI</h1><h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><pre><code>测试中发现硬件SPI在传输的时候容易出bug，有时候MOSI不会被拉低，导致数据错误，不知道如何解决。这里只展示最简单发送数据。</code></pre><h2 id="SPI所涉及寄存器"><a href="#SPI所涉及寄存器" class="headerlink" title="SPI所涉及寄存器"></a>SPI所涉及寄存器</h2><img src = "https://s1.328888.xyz/2022/09/22/I2XRr.png"><h3 id="SPCTL"><a href="#SPCTL" class="headerlink" title="SPCTL"></a>SPCTL</h3><img src = "https://s1.328888.xyz/2022/09/22/I2qUj.png"><h3 id="SPSTAT"><a href="#SPSTAT" class="headerlink" title="SPSTAT"></a>SPSTAT</h3><img src = "https://s1.328888.xyz/2022/09/22/I2pGI.png"><h2 id="例程"><a href="#例程" class="headerlink" title="例程"></a>例程</h2><h3 id="SPI-c"><a href="#SPI-c" class="headerlink" title="SPI.c"></a>SPI.c</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;SPI.h&quot;</span><br><span class="line"></span><br><span class="line">sbit LED = P3^0;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void delay3us(void)  </span><br><span class="line">&#123;</span><br><span class="line">    unsigned char a;</span><br><span class="line">    for(a=5;a&gt;0;a--);</span><br><span class="line">    _nop_();  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void SPI_Init()</span><br><span class="line">&#123;</span><br><span class="line">SPDAT = 0x00; //clear dat</span><br><span class="line"></span><br><span class="line">SPSTAT = SPIF|WCOL;</span><br><span class="line"></span><br><span class="line">SPCTL = SPEN|MSTR|SPDHH|CPHA|CPOL;//master  CPOL = 1  CPHA = 1</span><br><span class="line"></span><br><span class="line">IE2|=ESPI;</span><br><span class="line"></span><br><span class="line">EA = 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void SPI_WR_Byte(unsigned char dat)// 1 dat   0 cmd</span><br><span class="line">&#123;</span><br><span class="line">SPDAT=dat;</span><br><span class="line">delay3us();//need some delay  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void SPI_Interrupt() interrupt 9 </span><br><span class="line">&#123;</span><br><span class="line">SPSTAT = SPIF|WCOL;</span><br><span class="line">SPISS = 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="SPI-h"><a href="#SPI-h" class="headerlink" title="SPI.h"></a>SPI.h</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">#ifndef __SPI_OLED12864_H</span><br><span class="line">#define __SPI_OLED12864_h</span><br><span class="line"></span><br><span class="line">#include &lt;reg52.h&gt;</span><br><span class="line">#include &lt;intrins.h&gt;</span><br><span class="line"></span><br><span class="line">sfr SPCTL = 0xce;</span><br><span class="line">sfr SPSTAT = 0xcd;</span><br><span class="line">sfr SPDAT = 0xcf;</span><br><span class="line">sfr AUXR = 0xa2;</span><br><span class="line"></span><br><span class="line">sfr IE2 = 0xaf;</span><br><span class="line"></span><br><span class="line">sbit SPISS = P1^3;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#define SPIF  0x80</span><br><span class="line">#define WCOL  0x40</span><br><span class="line"></span><br><span class="line">#define SSIG  0x80</span><br><span class="line">#define SPEN  0x40</span><br><span class="line">#define DORD  0x20</span><br><span class="line">#define MSTR  0x10</span><br><span class="line">#define CPOL  0x08</span><br><span class="line">#define CPHA  0x04</span><br><span class="line"></span><br><span class="line">#define SPDHH  0x00</span><br><span class="line">#define SPDH  0x01</span><br><span class="line">#define SPDL  0x02</span><br><span class="line">#define SPDLL  0x03</span><br><span class="line"></span><br><span class="line">#define ESPI 0x02</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**********</span><br><span class="line"></span><br><span class="line">MOSI = P1^5</span><br><span class="line">MISO = P1^6</span><br><span class="line">SPICLK = P1^7</span><br><span class="line"></span><br><span class="line">**********/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void SPI_Init();</span><br><span class="line">void SPI_WR_Byte(unsigned char dat);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="main-c"><a href="#main-c" class="headerlink" title="main.c"></a>main.c</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;main.h&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">SPI_Init();</span><br><span class="line">while(1)</span><br><span class="line">&#123;</span><br><span class="line">SPI_WR_Byte(0x66);</span><br><span class="line">SPI_WR_Byte(0x76);</span><br><span class="line">SPI_WR_Byte(0x86);</span><br><span class="line">SPI_WR_Byte(0x96);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="main-h"><a href="#main-h" class="headerlink" title="main.h"></a>main.h</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#ifndef __MAIN_H</span><br><span class="line">#define __MAIN_H</span><br><span class="line"></span><br><span class="line">#include &lt;reg52.h&gt;</span><br><span class="line">#include &quot;SPI.h&quot;</span><br><span class="line">#include &lt;intrins.h&gt;</span><br><span class="line"></span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> STC12C5A60S2 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> STC12C5A60S2 </tag>
+            
+            <tag> SPI </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>STC12C5A60S2_PCA</title>
       <link href="/2022/09/21/STC12C5A60S2-PCA/"/>
       <url>/2022/09/21/STC12C5A60S2-PCA/</url>
@@ -298,11 +325,11 @@
       
         <tags>
             
+            <tag> SPI </tag>
+            
             <tag> STM32 </tag>
             
             <tag> HAL </tag>
-            
-            <tag> SPI </tag>
             
             <tag> OLED </tag>
             
@@ -329,11 +356,11 @@
       
         <tags>
             
+            <tag> SPI </tag>
+            
             <tag> STM32 </tag>
             
             <tag> HAL </tag>
-            
-            <tag> SPI </tag>
             
         </tags>
       
