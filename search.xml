@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>记录一些问题和注意事项</title>
+      <link href="/2022/09/29/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"/>
+      <url>/2022/09/29/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
+      
+        <content type="html"><![CDATA[<h1 id="ch340c"><a href="#ch340c" class="headerlink" title="ch340c"></a>ch340c</h1><p>一定注意 3.3v口必须串一个0.1uf电容，否则不能识别ch340!</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 随意记录 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>STC12C5A60S2_EEPROM</title>
       <link href="/2022/09/22/STC12C5A60S2-EEPROM/"/>
       <url>/2022/09/22/STC12C5A60S2-EEPROM/</url>
@@ -414,9 +433,9 @@
             
             <tag> STM32 </tag>
             
-            <tag> HAL </tag>
-            
             <tag> DMA </tag>
+            
+            <tag> HAL </tag>
             
         </tags>
       
@@ -574,7 +593,7 @@
     
     
     <entry>
-      <title>文章演示</title>
+      <title>文章演示(图床已挂先不放图片了)</title>
       <link href="/2022/08/18/%E6%96%87%E7%AB%A0Test/"/>
       <url>/2022/08/18/%E6%96%87%E7%AB%A0Test/</url>
       
